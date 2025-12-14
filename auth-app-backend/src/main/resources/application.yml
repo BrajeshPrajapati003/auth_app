@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: auth-app-backend
+  output:
+    ansi:
+      enabled: always
+  profiles:
+    active: dev
+
+server:
+  port: 8082
+
+
+# Configurations

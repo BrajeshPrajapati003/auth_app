@@ -1,0 +1,66 @@
+services:
+
+  db:
+    image: mysql:8.4
+    container_name: auth-app-mysql
+    restart: unless-stopped
+
+    ports:
+      - "3306:3306"
+
+    environment:
+      MYSQL_DATABASE: authdb
+      MYSQL_USER: authuser
+      MYSQL_PASSWORD: authpass
+      MYSQL_ROOT_PASSWORD: rootpass
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+    command:
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+
+    networks:
+      - auth_app
+
+
+  backend:
+    build: .
+    container_name: auth-app-backend
+
+    ports:
+      - "8080:8080"
+
+    depends_on:
+      - db
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/authdb
+      SPRING_DATASOURCE_USERNAME: authuser
+      SPRING_DATASOURCE_PASSWORD: authpass
+
+    networks:
+      - auth_app
+
+
+  frontend:
+    build: ../auth-app-frontend
+    container_name: auth-app-frontend
+
+    ports:
+      - "3000:3000"
+
+    depends_on:
+      - backend
+
+    networks:
+      - auth_app
+
+
+volumes:
+  mysql_data:
+
+
+networks:
+  auth_app:
