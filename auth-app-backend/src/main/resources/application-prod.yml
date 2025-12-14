@@ -1,3 +1,14 @@
 # Production version of configurations
 server:
   port: 8080
+
+#spring:
+#  hikari: (important in prod)
+#    pool-name: HikariCP # just a label (if you have multiple pools)
+#    maximum-pool-size: 5 # max no. of DB connections at once
+#    connection-timeout: 10000 # max time (ms) to wait for a free connection
+#    idle-timeout: 600000 # Time (ms) a connection can sit unused
+#    max-lifetime: 1800000 # max age of a connection (30 mins)
+#    validation-timeout: 5000 # max time to wait when checking if a connection is valid (should be in ms)
+#    leak-detection-threshold: 0 # detects if a connection isn't returned to pool (0 = disabled)
+#    initialization-fail-timeout: -1 # if DB is down at startup, don't fail the app (DB can connect later)

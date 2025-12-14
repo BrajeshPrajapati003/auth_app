@@ -11,7 +11,14 @@ spring:
     password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+# Don't over-tune Hikari (keep them in prod), defaults are already good
+
   jpa:
     hibernate:
       ddl-auto: update
+    properties:
+      hibernate: # hibernate dialect answers "how should I generate SQL for this db?"
+        dialect: org.hibernate.dialect.MySQLDialect # Spring boot auto-detects from the JDBC driver for mysql 8+, so we can skip it
+        format_sql: true
     show-sql: true
+
