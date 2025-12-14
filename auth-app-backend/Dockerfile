@@ -12,6 +12,9 @@ COPY src src
 
 RUN ./mvnw package -DskipTests
 
+# Copy jar with fixed name
+RUN cp target/*.jar app.jar
+
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "target/*.jar"]
+CMD ["java", "-jar", "app.jar"]

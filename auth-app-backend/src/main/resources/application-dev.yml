@@ -6,12 +6,12 @@ server:
 # Database connections
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/authdb}
+    # If env var exists -> use it (Docker)
+    # If not -> fallback to localhost (IDE)
+    username: ${SPRING_DATASOURCE_USERNAME:authuser}
+    password: ${SPRING_DATASOURCE_PASSWORD:authpass}
     driver-class-name: com.mysql.cj.jdbc.Driver
-
-# Don't over-tune Hikari (keep them in prod), defaults are already good
 
   jpa:
     hibernate:
@@ -21,4 +21,6 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect # Spring boot auto-detects from the JDBC driver for mysql 8+, so we can skip it
         format_sql: true
     show-sql: true
+
+# Don't over-tune Hikari (keep them in prod), defaults are already good
 
