@@ -15,12 +15,13 @@ import java.util.UUID;
 @Builder
 
 @Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "user_id")
     private UUID id;
-    @Column(name = "user_email", unique = true, length = 300)
+    @Column(name = "user_email", unique = true, updatable = false ,length = 300)
     private String email;
     @Column(name = "user_name", length = 500)
     private String name;
@@ -34,7 +35,7 @@ public class User {
     private Provider provider = Provider.LOCAL;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_roles",
+    @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
