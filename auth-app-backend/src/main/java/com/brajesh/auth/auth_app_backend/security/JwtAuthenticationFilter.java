@@ -60,13 +60,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         .ifPresent(user -> {
 
                             // Check for user enable or not
-                            if(!user.isEnable()){
+                            if(user.isEnable()){
                                     // User is found from DB
                                     List<GrantedAuthority> authorities = user.getRoles()==null ? List.of(): user.getRoles().stream()
                                             .map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 
                                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                                            user.getEmail(), null, authorities
+                                            user, null, authorities
                                     );
 
                                     authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
