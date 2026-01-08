@@ -54,8 +54,9 @@ public class AuthController {
     }
 
     private Authentication authenticate(LoginRequest loginRequest) {
+
+        // Rethrowing the BadCredentialsExceptions -> learning ExceptionHandling
         try {
-            System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBbb");
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequest.email(), loginRequest.password()
                     )
