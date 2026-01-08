@@ -38,6 +38,8 @@ public class RefreshToken {
     @Column(nullable = false)
     private boolean revoked;
 
+//    private String refreshToken;
+
     private String replacedByToken;
 
 }
