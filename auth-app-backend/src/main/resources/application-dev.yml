@@ -21,6 +21,18 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect # Spring boot auto-detects from the JDBC driver for mysql 8+, so we can skip it
         format_sql: true
     show-sql: true
+  security:
+#    oauth2 configurations
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID:test-client-id}
+            client-secret: ${GOOGLE_CLIENT_SECRET:test-client-secret}
+            scope:
+              - email
+              - profile
+              - openid
 
 # Don't over-tune Hikari (keep them in prod), defaults are already good
 
