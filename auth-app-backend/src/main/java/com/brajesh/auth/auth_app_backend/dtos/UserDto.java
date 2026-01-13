@@ -1,8 +1,6 @@
 package com.brajesh.auth.auth_app_backend.dtos;
 
 import com.brajesh.auth.auth_app_backend.entities.Provider;
-import com.brajesh.auth.auth_app_backend.entities.Role;
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Instant;

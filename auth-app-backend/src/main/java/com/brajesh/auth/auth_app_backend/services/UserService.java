@@ -2,9 +2,6 @@ package com.brajesh.auth.auth_app_backend.services;
 
 import com.brajesh.auth.auth_app_backend.dtos.UserDto;
 
-import java.util.Optional;
-import java.util.UUID;
-
 public interface UserService {
 
     UserDto createUser(UserDto userDto);

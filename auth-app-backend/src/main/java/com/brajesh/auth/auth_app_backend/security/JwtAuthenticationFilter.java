@@ -1,6 +1,5 @@
 package com.brajesh.auth.auth_app_backend.security;
 
-import com.brajesh.auth.auth_app_backend.entities.User;
 import com.brajesh.auth.auth_app_backend.repositories.UserRepository;
 
 import com.brajesh.auth.auth_app_backend.utils.UserHelper;
@@ -16,7 +15,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
