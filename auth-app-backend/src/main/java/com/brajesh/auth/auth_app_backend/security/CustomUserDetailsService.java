@@ -1,7 +1,5 @@
 package com.brajesh.auth.auth_app_backend.security;
 
-import com.brajesh.auth.auth_app_backend.entities.User;
-import com.brajesh.auth.auth_app_backend.exceptions.ResourceNotFoundException;
 import com.brajesh.auth.auth_app_backend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;

@@ -1,9 +1,7 @@
 package com.brajesh.auth.auth_app_backend.controllers;
 
 import com.brajesh.auth.auth_app_backend.dtos.UserDto;
-import com.brajesh.auth.auth_app_backend.entities.User;
 import com.brajesh.auth.auth_app_backend.services.UserService;
-import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

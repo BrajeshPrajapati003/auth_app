@@ -2,13 +2,10 @@ package com.brajesh.auth.auth_app_backend.exceptions;
 
 import com.brajesh.auth.auth_app_backend.dtos.ApiError;
 import com.brajesh.auth.auth_app_backend.dtos.ErrorResponse;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.CredentialsExpiredException;
