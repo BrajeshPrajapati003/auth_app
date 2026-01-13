@@ -9,8 +9,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -23,7 +25,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -31,6 +33,9 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     private final JwtService jwtService;
     private final CookieService cookieService;
     private final RefreshTokenRepository refreshTokenRepository;
+
+    @Value("${app.auth.frontend.success-redirect}")
+    private String frontEndSuccessUrl;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -55,6 +60,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         User user = switch (registrationId) {
             case "google" -> {
                 String googleId = String.valueOf(attributes.getOrDefault("sub", ""));
+
                 String email = String.valueOf(attributes.getOrDefault("email", ""));
                 String name = String.valueOf(attributes.getOrDefault("name", ""));
                 String picture = String.valueOf(attributes.getOrDefault("picture", ""));
@@ -74,14 +80,41 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                             .image(picture)
                             .enable(true)
                             .provider(Provider.GOOGLE)
-//                             .providerId(googleId)
+                            .providerId(googleId)
                             .build();
 //                    specify default role
                     return userRepository.save(newUser);
                 });
             }
 
-            case "github" -> throw new RuntimeException("GitHub login not implemented yet");
+            case "github" -> {
+
+                String name = String.valueOf(attributes.getOrDefault("login", ""));
+                String email = String.valueOf(attributes.getOrDefault("email", ""));
+                String githubId = String.valueOf(attributes.getOrDefault("id", ""));
+                String image = String.valueOf(attributes.getOrDefault("avatar_url", ""));
+
+                if (email.isBlank()) {
+                    throw new RuntimeException("Email not provided by Github");
+                }
+
+                if (githubId.isBlank()) {
+                    throw new RuntimeException("Github ID missing");
+                }
+
+                yield userRepository.findByEmail(email).orElseGet(() -> {
+                    User newUser = User.builder()
+                            .email(email)
+                            .name(name)
+                            .image(image)
+                            .enable(true)
+                            .provider(Provider.GITHUB)
+                            .providerId(githubId)
+                            .build();
+//                    specify default role
+                    return userRepository.save(newUser);
+                });
+            }
 
             default -> throw new RuntimeException("Invalid registration id!");
         };
@@ -92,6 +125,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         // New user creation
         // jwt token -> token ke saath frontend pe redirect
 
+//        refresh: user -> refresh token unko revoke
         // Refresh the token
         String jti = UUID.randomUUID().toString();
         RefreshToken refreshTokenOb = RefreshToken.builder().jti(jti).user(user)
@@ -104,7 +138,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         String accessToken = jwtService.generateAccessToken(user);
         String refreshToken = jwtService.generateRefreshToken(user, refreshTokenOb.getJti());
         cookieService.attachRefreshCookie(response, refreshToken, (int) jwtService.getRefreshTtlSeconds());
-
-        response.getWriter().write("Login successful");
+//        response.getWriter().write("Login successful");
+        response.sendRedirect(frontEndSuccessUrl);
     }
 }
