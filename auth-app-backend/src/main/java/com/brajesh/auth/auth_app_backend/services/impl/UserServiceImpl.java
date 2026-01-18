@@ -34,6 +34,11 @@ public class UserServiceImpl implements UserService {
         // If you have extra checks --> put here
 
         User user = modelMapper.map(userDto, User.class);
+
+        // Force enable to true if null
+        if(user.getEnable() == null){
+            user.setEnable(true);
+        }
         user.setProvider(userDto.getProvider() != null ? userDto.getProvider() : Provider.LOCAL);
 
         // Role assign here to user --> for auth
@@ -63,7 +68,7 @@ public class UserServiceImpl implements UserService {
         // TODO: change the password updation logic...
         if(userDto.getPassword() != null) existingUser.setPassword(userDto.getPassword());
         existingUser.setUpdatedAt(Instant.now());
-        existingUser.setEnable(userDto.isEnable());
+        existingUser.setEnable(userDto.getEnable());
         User updatedUser = userRepository.save(existingUser);
         return modelMapper.map(updatedUser, UserDto.class);
     }

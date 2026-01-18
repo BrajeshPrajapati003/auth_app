@@ -28,7 +28,8 @@ public class User implements UserDetails {
     private String name;
     private String password;
     private String image;
-    private boolean enable = true;
+    @Column(name = "enable", nullable = false)
+    private Boolean enable = true;
     private Instant createdAt = Instant.now();
     private Instant updatedAt = Instant.now();
 
@@ -84,6 +85,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.enable;
+        return this.enable != null && this.enable;
     }
 }

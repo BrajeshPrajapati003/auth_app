@@ -60,7 +60,7 @@ public class AuthController {
         User user = userRepository.findByEmail(loginRequest.email()).orElseThrow(()->
                 new BadCredentialsException(("Invalid Username or Password!")));
 
-        if(!user.isEnable()){
+        if(!user.getEnable()){
             throw new DisabledException("User is Disabled...");
         }
 
