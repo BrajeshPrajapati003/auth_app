@@ -1,4 +1,5 @@
 import apiClient from "@/config/ApiClient";
+import type LoginData from "@/models/LoginData";
 import type RegisterData from "@/models/RegisterData";
 
 
@@ -11,6 +12,10 @@ export const registerUser = async (signupData: RegisterData) => {
 
 
 // Login
+export const loginUser = async (loginData: LoginData) => {
+  const response = await apiClient.post("/auth/login", loginData);
+  return response.data;
+}
 
 // Get current login user
 

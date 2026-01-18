@@ -1,0 +1,40 @@
+
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="neonGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#22D3EE"/>
+      <stop offset="100%" stop-color="#A855F7"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Outer futuristic hex shield -->
+  <path
+    d="M256 40 L420 140 V372 L256 472 L92 372 V140 Z"
+    stroke="url(#neonGradient)"
+    stroke-width="12"
+    fill="rgba(0,0,0,0)"
+    filter="url(#glow)"
+  />
+
+  <!-- Inner stylized A -->
+  <path
+    d="M256 120 L330 360 H300 L270 300 H242 L212 360 H182 L256 120 Z
+       M248 260 H264 L256 235 Z"
+    fill="url(#neonGradient)"
+    filter="url(#glow)"
+  />
+
+  <!-- Circuit nodes -->
+  <circle cx="256" cy="90" r="6" fill="#22D3EE"/>
+  <circle cx="340" cy="180" r="6" fill="#A855F7"/>
+  <circle cx="172" cy="180" r="6" fill="#22D3EE"/>
+  <circle cx="340" cy="320" r="6" fill="#22D3EE"/>
+  <circle cx="172" cy="320" r="6" fill="#A855F7"/>
+</svg>

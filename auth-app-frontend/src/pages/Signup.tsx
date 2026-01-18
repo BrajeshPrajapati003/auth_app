@@ -3,18 +3,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Github, Mail, User } from "lucide-react";
+import { Github, Mail, User, AlertTriangle } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import type RegisterData from "@/models/RegisterData"; // IMP: export default type
-import {registerUser} from "@/services/AuthService";
+import type RegisterData from "@/models/RegisterData";
+import { registerUser } from "@/services/AuthService";
 import { useNavigate } from "react-router";
-// import GraffitiSuccess from "@/components/GraffitiSuccess";
 import confetti from "canvas-confetti";
-
+import { Alert, AlertTitle } from "@/components/ui/alert";
+import { Spinner } from "@/components/ui/spinner";
+import axios from "axios";
 
 export default function Signup() {
-
   const [data, setData] = useState<RegisterData>({
     name: "",
     email: "",
@@ -22,40 +22,31 @@ export default function Signup() {
   });
 
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const [error, setError] = useState(null);
-
-  // const [showGraffiti, setShowGraffiti] = useState(false);
+  const navigate = useNavigate();
 
   const fireGraffitiConfetti = () => {
-  confetti({
-    particleCount: 120,
-    spread: 80,
-    origin: { y: 0.6 },
-    colors: ["#00ffee", "#ff00cc", "#8a2be2", "#00ccff"],
-  });
-};
+    confetti({
+      particleCount: 120,
+      spread: 80,
+      origin: { y: 0.6 },
+      colors: ["#00ffee", "#ff00cc", "#8a2be2", "#00ccff"],
+    });
+  };
 
-
-  // Handle input change
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.name);
-    console.log(event.target.value);
-
     setData((value) => ({
       ...value,
       [event.target.name]: event.target.value,
     }));
+
+    if (error) setError(null);
   };
 
-  const navigate = useNavigate();
-
-  // Handle form submission
   const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    console.log(data);
 
-    // Handle Form validations
     if (data.name.trim() === "") {
       toast.error("Name is required!");
       return;
@@ -69,39 +60,49 @@ export default function Signup() {
       return;
     }
 
-    // Form submit for registration
     try {
+      setLoading(true);
       const result = await registerUser(data);
       console.log(result);
-      // setShowGraffiti(true);
 
       fireGraffitiConfetti();
+      toast.success("User registered successfully!");
 
-      
-      toast.success("User register successfully...");
-
-      // setTimeout(()=> {
-      //   setShowGraffiti(false); // or dashboard
-      // }, 2000);
-      
       setData({
         name: "",
         email: "",
         password: "",
       });
-      
-//      Navigate to the login page
-        navigate("/login");
 
-    } catch (error) {
-      console.log(error);
-      toast.error("Error in registering the user");
+      navigate("/login");
+    } catch (err: unknown) {
+      console.error(err);
+
+      if (axios.isAxiosError(err)) {
+        if (err.response) {
+          const message =
+            err.response.data?.message ||
+            err.response.data?.error ||
+            "Something went wrong";
+          setError(message);
+          toast.error(message);
+        } else if (err.request) {
+          setError("Server unreachable");
+          toast.error("Server unreachable. Try again later.");
+        } else {
+          setError("Unexpected error");
+          toast.error("Unexpected error occurred");
+        }
+      } else {
+        setError("Unknown error");
+        toast.error("Something went wrong");
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <>
-
     <div className="min-h-screen flex items-center justify-center bg-background text-foreground relative overflow-hidden px-4 sm:px-6">
       {/* Glow Background */}
       <div className="absolute inset-0">
@@ -160,6 +161,14 @@ export default function Signup() {
               <div className="flex-1 h-px bg-border" />
             </div>
 
+            {/* Error */}
+            {error && (
+              <Alert variant="destructive" className="my-4">
+                <AlertTriangle className="h-4 w-4" />
+                <AlertTitle>{error}</AlertTitle>
+              </Alert>
+            )}
+
             {/* Register Form */}
             <form className="space-y-5" onSubmit={handleFormSubmit}>
               <div className="space-y-2">
@@ -168,7 +177,7 @@ export default function Signup() {
                   <User className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
                   <Input
                     type="text"
-                    placeholder="Neo Anderson"
+                    placeholder="Enter your full name"
                     className="pl-10"
                     name="name"
                     value={data.name}
@@ -181,7 +190,7 @@ export default function Signup() {
                 <Label>Email</Label>
                 <Input
                   type="email"
-                  placeholder="neo@matrix.com"
+                  placeholder="Enter your email"
                   name="email"
                   value={data.email}
                   onChange={handleInputChange}
@@ -192,30 +201,46 @@ export default function Signup() {
                 <Label>Password</Label>
                 <Input
                   type="password"
-                  placeholder="••••••••"
+                  placeholder="Enter password"
                   name="password"
                   value={data.password}
                   onChange={handleInputChange}
                 />
               </div>
 
-              <Button className="w-full text-lg py-6"
-              disabled={loading}
+              <Button
+                className="
+                  w-full text-base sm:text-lg py-5 sm:py-6 flex items-center justify-center gap-2
+                  bg-indigo-600
+                  hover:bg-cyan-500
+                  active:bg-pink-600
+                  hover:scale-[1.02]
+                  active:scale-[0.97]
+                  transition-all duration-200
+                  shadow-lg hover:shadow-cyan-500/40 cursor-pointer
+                "
+                disabled={loading}
               >
-                {loading ? "Creating" : "Create Account"}</Button>
+                {loading ? (
+                  <>
+                    <Spinner className="size-4 animate-spin" />
+                    Creating...
+                  </>
+                ) : (
+                  "Create Account"
+                )}
+              </Button>
             </form>
 
             <p className="text-center text-sm text-muted-foreground mt-6">
               Already have an account?{" "}
-              <span className="text-primary cursor-pointer hover:underline">
+              <a href="/login" className="text-primary cursor-pointer hover:underline">
                 Login
-              </span>
+              </a>
             </p>
           </CardContent>
         </Card>
       </motion.div>
     </div>
-    </>
-    
   );
 }
