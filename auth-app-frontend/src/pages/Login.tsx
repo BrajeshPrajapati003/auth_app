@@ -13,6 +13,7 @@ import { Alert, AlertTitle } from "@/components/ui/alert";
 import axios from "axios";
 import { AlertTriangle } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
+import useAuth from "@/auth/store";
 
 export default function Login() {
   const [loginData, setLoginData] = useState<LoginData>({
@@ -24,7 +25,9 @@ export default function Login() {
 
   const [error, setError] = useState<string | null>(null);
 
+
   const navigate = useNavigate();
+  const login = useAuth((state) => state.login);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLoginData({
@@ -54,9 +57,14 @@ export default function Login() {
 
     try {
       setLoading(true);
-      const userInfo = await loginUser(loginData);
+      // const userInfo = await loginUser(loginData);
+
+      // Login function: useAuth
+      // const userInfo = await login(loginData);
+      await login(loginData);
+
       toast.success("Login Success...");
-      console.log(userInfo);
+      // console.log(userInfo);
 
       // Save the current logged in user information in localstorage
 

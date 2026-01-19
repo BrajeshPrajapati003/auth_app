@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate, useLocation } from "react-router";
+import useAuth from "@/auth/store";
 
 
 const NavItem = ({ to, label }: { to: string; label: string }) => (
@@ -24,6 +25,20 @@ const NavItem = ({ to, label }: { to: string; label: string }) => (
 
 const Navbar = () => {
 
+  const checkLogin = useAuth((state) => state.checkLogin);
+  const user = useAuth((state) => state.user);
+  const logout = useAuth((state) => state.logout);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleLogout = async ()=> {
+    await logout();
+    navigate("/login", {
+      replace: true,
+      state: {from: location.pathname},
+    });
+  };
+
   return (
     <motion.nav
       initial={{ y: -20, opacity: 0 }}
@@ -45,8 +60,26 @@ const Navbar = () => {
         </motion.div>
 
         {/* Links */}
+        {checkLogin() ? (
+          <div className="flex gap-4 items-center">
+            <NavLink to="#!">{user?.name}</NavLink>
+
+          <NavLink to="/logout">
+            <Button
+              size="sm"
+              className="bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-cyan-500 hover:to-indigo-600 transition-all shadow-md hover:shadow-cyan-500/40"
+              onClick={()=> {
+                handleLogout();
+              }}
+            >
+              Logout
+            </Button>
+          </NavLink>
+        </div>
+        ) : <>
         <div className="flex gap-4 items-center">
           <NavItem to="/" label="Home" />
+          
           <NavLink to="/login">
             <Button
               variant="outline"
@@ -66,6 +99,7 @@ const Navbar = () => {
             </Button>
           </NavLink>
         </div>
+        </>}
       </div>
     </motion.nav>
   );
