@@ -2,6 +2,7 @@ import apiClient from "@/config/ApiClient";
 import type LoginData from "@/models/LoginData";
 import type LoginResponseData from "@/models/LoginResponseData";
 import type RegisterData from "@/models/RegisterData";
+import type User from "@/models/User";
 
 
 // Register function
@@ -27,6 +28,10 @@ export const logoutUser = async ()=> {
 
 
 // Get current login user
+export const getCurrentUser = async (emailId: string | undefined) => {
+  const response = await apiClient.get<User>(`/users/email/${emailId}`);
+  return response.data;
+}
 
 // Refresh token
 

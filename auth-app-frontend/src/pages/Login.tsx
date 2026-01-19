@@ -35,7 +35,7 @@ export default function Login() {
       [event.target.name]: event.target.value,
     });
     if (error) setError(null);
-    console.log(event.target.value);
+    // console.log(event.target.value);
   };
 
   const handleSubmit = async (event: FormEvent) => {

@@ -10,6 +10,7 @@ const ApiClient = axios.create({
     timeout: 10000
 });
 
+// Every request
 ApiClient.interceptors.request.use((config) => {
   const { accessToken } = useAuth.getState();
 
