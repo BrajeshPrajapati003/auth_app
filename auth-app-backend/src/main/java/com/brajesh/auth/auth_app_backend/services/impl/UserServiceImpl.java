@@ -68,7 +68,9 @@ public class UserServiceImpl implements UserService {
         // TODO: change the password updation logic...
         if(userDto.getPassword() != null) existingUser.setPassword(userDto.getPassword());
         existingUser.setUpdatedAt(Instant.now());
-        existingUser.setEnable(userDto.getEnable());
+        if (userDto.getEnable() != null) {
+            existingUser.setEnable(userDto.getEnable());
+        }
         User updatedUser = userRepository.save(existingUser);
         return modelMapper.map(updatedUser, UserDto.class);
     }
@@ -92,7 +94,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Iterable<UserDto> getAllUsers() {
         return userRepository.findAll().stream().map(user ->
-                modelMapper.map(user, UserDto.class))
+                        modelMapper.map(user, UserDto.class))
                 .toList();
     }
 }
