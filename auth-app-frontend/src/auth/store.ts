@@ -24,6 +24,7 @@ type AuthState = {
   logout: (silent?: boolean) => void;
   authLoading: boolean;
   checkLogin: () => boolean;
+  updateUser: (user: User) => void;
 };
 
 // Main logic for global state
@@ -84,6 +85,9 @@ const useAuth = create<AuthState>()(
 
         //!   If these two ever get out of sync -> that can cause ghost login bugs.
       },
+      updateUser: (user) => {
+        set({user});
+      }
     }),
     { name: LOCAL_KEY },
   ),

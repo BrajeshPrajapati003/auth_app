@@ -62,9 +62,9 @@ const Navbar = () => {
         {/* Links */}
         {checkLogin() ? (
           <div className="flex gap-4 items-center">
-            <NavLink to="#!">{user?.name}</NavLink>
+            <NavLink to={"/user/profile"}>{user?.name}</NavLink>
 
-          <NavLink to="/logout">
+          
             <Button
               size="sm"
               className="bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-cyan-500 hover:to-indigo-600 transition-all shadow-md hover:shadow-cyan-500/40"
@@ -74,7 +74,6 @@ const Navbar = () => {
             >
               Logout
             </Button>
-          </NavLink>
         </div>
         ) : <>
         <div className="flex gap-4 items-center">

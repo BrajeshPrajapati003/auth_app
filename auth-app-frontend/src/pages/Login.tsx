@@ -68,7 +68,7 @@ export default function Login() {
 
       // Save the current logged in user information in localstorage
 
-      navigate("/dashboard");
+      navigate("/user");
     } catch (error: unknown) {
       console.error(error);
 
