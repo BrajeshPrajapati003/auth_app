@@ -50,6 +50,7 @@ public class CookieService {
                 .path("/")
                 .maxAge(maxAge)
                 .sameSite(cookieSameSite);
+//                These values come from properties
 
         if(cookieDomain!=null && !cookieDomain.isBlank()){
             responseCookieBuilder.domain(cookieDomain);

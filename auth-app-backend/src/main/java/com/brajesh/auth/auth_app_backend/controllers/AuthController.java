@@ -12,11 +12,14 @@ import com.brajesh.auth.auth_app_backend.security.CookieService;
 import com.brajesh.auth.auth_app_backend.security.JwtService;
 import com.brajesh.auth.auth_app_backend.services.AuthService;
 import io.jsonwebtoken.JwtException;
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +41,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/auth")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AuthController {
 
     private final AuthService authService;
@@ -245,5 +248,22 @@ public class AuthController {
     public ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(authService.registerUser(userDto));
     }
+
+
+    @Value("${spring.security.oauth2.client.registration.google.client-id}")
+    private String googleClientId;
+
+    @PostConstruct
+    public void logGoogleClientId() {
+        System.out.println("Google Client ID = [" + googleClientId + "]");
+    }
+
+//    @Value("${spring.security.oauth2.client.registration.google.client-secret}")
+//    private String clientSecret;
+//
+//    @PostConstruct
+//    public void logGoogleSecretId(){
+//        System.out.println("Google Secret ID = [" + clientSecret + "]");
+//    }
 
 }

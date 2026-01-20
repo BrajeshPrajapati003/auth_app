@@ -1,0 +1,32 @@
+
+server:
+  port: 8080
+  servlet:
+    session:
+          cookie:
+            # Without these -> OAuth breaks in hybrid
+            same-site: none # for cross-origin (5173 -> 8080)
+            secure: false # for localhost
+            http-only: true # best practice
+
+app:
+  cors:
+    front-end-url: http://localhost:5173
+  auth:
+    frontend:
+      success-redirect: http://localhost:5173/oauth/success
+      failure-redirect: http://localhost:5173/oauth/failure
+
+
+security:
+  jwt:
+    refresh-token-cookie-name: refreshToken
+    cookie-http-only: true
+    cookie-secure: false       # IMPORTANT for localhost
+    cookie-same-site: None     # IMPORTANT for cross-origin
+    cookie-domain:             # leave empty for localhost
+
+
+# Cookies won't be sent unless you enable credentials: axios.defaults.withCredentials = true;
+# or per request: axios.post(url, data, {withCredentials: true})
+

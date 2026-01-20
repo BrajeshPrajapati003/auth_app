@@ -9,7 +9,7 @@ function OAuth2Buttons() {
     <div className="space-y-3">
       <Button
         variant="outline"
-        className="w-full flex gap-2 py-5 sm:py-6 text-sm sm:text-base"
+        className="w-full cursor-pointer flex gap-2 py-5 sm:py-6 text-sm sm:text-base"
         onClick={() => {
           console.log("VITE_BASE_URL: ", baseUrl);
 
@@ -23,7 +23,7 @@ function OAuth2Buttons() {
 
       <Button
         variant="outline"
-        className="w-full flex gap-2 py-5 sm:py-6 text-sm sm:text-base"
+        className="w-full cursor-pointer flex gap-2 py-5 sm:py-6 text-sm sm:text-base"
         onClick={() => {
           console.log("VITE_BASE_URL: ", baseUrl);
 

@@ -5,7 +5,8 @@ spring:
     ansi:
       enabled: always
   profiles:
-    active: dev
+    active: devhybrid
+#    active: dev
 
 server:
   port: 8082
