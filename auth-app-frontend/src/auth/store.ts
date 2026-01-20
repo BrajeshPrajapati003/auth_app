@@ -9,10 +9,10 @@ const LOCAL_KEY = "app_state";
 
 // type AuthStatus = "idle" | "authenticating" | "authenticated" | "anonymous";
 
-type LoginRequestData = {
-  accessToken: string;
-  user: User;
-};
+// type LoginRequestData = {
+//   accessToken: string;
+//   user: User;
+// };
 
 // Global auth state
 type AuthState = {

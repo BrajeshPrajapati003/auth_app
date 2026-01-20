@@ -21,4 +21,3 @@ export const updateUserProfile = async (userId: string, data: {
 //   const res = await apiClient.put(`/users/${userId}/password`, data);
 //   return res.data;
 // };
-

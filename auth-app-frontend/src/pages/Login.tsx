@@ -3,17 +3,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { CheckCircle2Icon, Github, Mail } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import type LoginData from "@/models/LoginData";
 import toast from "react-hot-toast";
-import { loginUser } from "@/services/AuthService";
 import { useNavigate } from "react-router";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import axios from "axios";
 import { AlertTriangle } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
 import useAuth from "@/auth/store";
+import OAuth2Buttons from "@/components/OAuth2Buttons";
 
 export default function Login() {
   const [loginData, setLoginData] = useState<LoginData>({
@@ -24,7 +23,6 @@ export default function Login() {
   const [loading, setLoading] = useState<boolean>(false);
 
   const [error, setError] = useState<string | null>(null);
-
 
   const navigate = useNavigate();
   const login = useAuth((state) => state.login);
@@ -115,8 +113,7 @@ export default function Login() {
         toast.error("Something went wrong");
         setError("Unknown error");
       }
-    }finally{
-      
+    } finally {
       setLoading(false);
     }
   };
@@ -147,31 +144,7 @@ export default function Login() {
             </p>
 
             {/* OAuth Buttons */}
-            <div className="mt-6 space-y-3">
-              <Button
-                variant="outline"
-                className="w-full flex gap-2 py-5 sm:py-6 text-sm sm:text-base"
-                onClick={() =>
-                  (window.location.href =
-                    "http://localhost:8080/oauth2/authorization/google")
-                }
-              >
-                <Mail className="w-5 h-5" />
-                Continue with Google
-              </Button>
-
-              <Button
-                variant="outline"
-                className="w-full flex gap-2 py-5 sm:py-6 text-sm sm:text-base"
-                onClick={() =>
-                  (window.location.href =
-                    "http://localhost:8080/oauth2/authorization/github")
-                }
-              >
-                <Github className="w-5 h-5" />
-                Continue with GitHub
-              </Button>
-            </div>
+            <OAuth2Buttons />
 
             {/* Divider */}
             <div className="flex items-center my-6">
@@ -240,7 +213,10 @@ export default function Login() {
 
             <p className="text-center text-xs sm:text-sm text-muted-foreground mt-6">
               New here?{" "}
-              <a href="/signup" className="text-primary cursor-pointer hover:underline">
+              <a
+                href="/signup"
+                className="text-primary cursor-pointer hover:underline"
+              >
                 Create an account
               </a>
             </p>

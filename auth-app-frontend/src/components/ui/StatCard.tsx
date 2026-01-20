@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import React from 'react'
 
 const StatCard = ({ title, value, icon, glow }: any) => {
   const glowMap: any = {

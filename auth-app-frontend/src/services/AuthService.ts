@@ -36,4 +36,3 @@ export const getCurrentUser = async (emailId: string | undefined) => {
 // Refresh token
 
 // APIs
-
