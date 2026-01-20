@@ -53,8 +53,8 @@ public class SecurityConfig {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 .authorizeHttpRequests(auth ->
-                auth.requestMatchers(AppConstants.AUTH_PUBLIC_URLS).permitAll()
-                        .anyRequest().authenticated())
+                        auth.requestMatchers(AppConstants.AUTH_PUBLIC_URLS).permitAll()
+                                .anyRequest().authenticated())
                 .oauth2Login(oauth2 ->
                         oauth2.successHandler(successHandler)
                                 .failureHandler(null)
@@ -62,26 +62,26 @@ public class SecurityConfig {
                 .logout(AbstractHttpConfigurer::disable)
                 .exceptionHandling(ex ->
                         ex.authenticationEntryPoint((request, response, e) -> {
-                    // Error message
+                            // Error message
 //                    e.printStackTrace();
-                    response.setStatus(401);
-                    response.setContentType("application/json");
-                    String message = e.getMessage();
+                            response.setStatus(401);
+                            response.setContentType("application/json");
+                            String message = e.getMessage();
 
 
-                    String error = (String) request.getAttribute("error");
-                    if(error != null) message = error;
+                            String error = (String) request.getAttribute("error");
+                            if(error != null) message = error;
 
 //                    Map<String, Object> errorMap = Map.of("message", message, "statusCode", 401);
 
-                    var apiError = ApiError.of(
-                            HttpStatus.UNAUTHORIZED.value(),
-                            "Unauthorized Access", message,
-                            request.getRequestURI(),
-                            true);
-                    var objectMapper = new ObjectMapper();
-                    response.getWriter().write(objectMapper.writeValueAsString(apiError));
-                }))
+                            var apiError = ApiError.of(
+                                    HttpStatus.UNAUTHORIZED.value(),
+                                    "Unauthorized Access", message,
+                                    request.getRequestURI(),
+                                    true);
+                            var objectMapper = new ObjectMapper();
+                            response.getWriter().write(objectMapper.writeValueAsString(apiError));
+                        }))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

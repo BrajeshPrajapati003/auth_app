@@ -1,3 +1,4 @@
+
 package com.brajesh.auth.auth_app_backend.entities;
 
 import jakarta.persistence.*;
