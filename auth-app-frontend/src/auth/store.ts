@@ -25,6 +25,12 @@ type AuthState = {
   authLoading: boolean;
   checkLogin: () => boolean;
   updateUser: (user: User) => void;
+
+  changeLocalLoginData: (
+    accessToken: string,
+    user: User,
+    authStatus: boolean,
+  ) => void;
 };
 
 // Main logic for global state
@@ -87,6 +93,13 @@ const useAuth = create<AuthState>()(
       },
       updateUser: (user) => {
         set({user});
+      },
+      changeLocalLoginData: (accessToken, user, authStatus) => {
+        set({
+          accessToken,
+          user,
+          authStatus,
+        });
       }
     }),
     { name: LOCAL_KEY },
