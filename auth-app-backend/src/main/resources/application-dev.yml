@@ -27,8 +27,8 @@ spring:
       client:
         registration:
           google:
-            client-id: ${GOOGLE_CLIENT_ID}
-            client-secret: ${GOOGLE_CLIENT_SECRET}
+            client-id: ${GOOGLE_CLIENT_ID} # test-client-id
+            client-secret: ${GOOGLE_CLIENT_SECRET} # test-client-id
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
 #            /login/oauth2/code/google
             scope:
@@ -37,8 +37,8 @@ spring:
               - openid
 
           github:
-            client-id: ${GITHUB_CLIENT_ID}
-            client-secret: ${GITHUB_CLIENT_SECRET}
+            client-id: ${GITHUB_CLIENT_ID} # test-client-id
+            client-secret: ${GITHUB_CLIENT_SECRET} # test-client-id
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             #/login/oauth2/code/github
             scope:

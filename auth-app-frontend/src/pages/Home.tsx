@@ -1,118 +1,92 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { useNavigate } from "react-router";
 
-export default function Home() {
+const Home = () => {
+  const navigate = useNavigate();
+
   return (
-    <div className="bg-background text-foreground transition-colors duration-300">
-      {/* HERO */}
-      <section className="min-h-screen flex flex-col justify-center items-center text-center px-6">
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-5xl md:text-7xl font-bold tracking-tight"
-        >
-          Next-Gen Authentication
-        </motion.h1>
+    <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-background text-foreground">
+      
+      {/* Background Grid Glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.06)_1px,transparent_0)] [background-size:40px_40px] opacity-20 dark:opacity-10" />
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-          className="mt-6 max-w-2xl text-muted-foreground"
-        >
-          Secure, fast, and frictionless authentication for modern applications.
-        </motion.p>
+      {/* Floating Blur Orbs */}
+      <div className="absolute -top-40 -left-40 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl" />
+      <div className="absolute top-1/2 -right-40 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl" />
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
-          className="mt-10 flex gap-4"
-        >
-          <Button size="lg">Get Started</Button>
-          <Button size="lg" variant="outline">
-            View Demo
-          </Button>
-        </motion.div>
-      </section>
-
-      {/* FEATURES */}
-      <section className="py-24 px-6">
-        <h2 className="text-4xl font-bold text-center">Features</h2>
-
-        <div className="mt-16 grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-          {[
-            ["Multi-Factor Auth", "Extra layers of security"],
-            ["JWT Tokens", "Stateless & scalable"],
-            ["RBAC", "Fine-grained permissions"],
-            ["Session Control", "Manage logins in real-time"],
-          ].map(([title, desc], i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-            >
-              <Card className="backdrop-blur-xl">
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold">{title}</h3>
-                  <p className="mt-2 text-muted-foreground">{desc}</p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="relative z-10 max-w-3xl px-6 text-center"
+      >
+        {/* Badge */}
+        <div className="mb-4 inline-block rounded-full border px-4 py-1 text-xs tracking-wide text-muted-foreground backdrop-blur">
+          ⚡ Modern Auth Platform
         </div>
-      </section>
 
-      {/* HOW IT WORKS */}
-      <section className="py-24 px-6 bg-muted/50 rounded-sm">
-        <h2 className="text-4xl font-bold text-center">How It Works</h2>
+        {/* Heading */}
+        <h1 className="text-4xl md:text-6xl font-bold leading-tight tracking-tight">
+          Authentication,
+          <br />
+          <span className="bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">
+            done right.
+          </span>
+        </h1>
 
-        <div className="mt-16 grid md:grid-cols-3 gap-10 max-w-6xl mx-auto text-center">
-          {["Sign Up", "Verify", "Secure Access"].map((step, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.2 }}
-            >
-              <h3 className="text-xl font-semibold">{step}</h3>
-              <p className="mt-2 text-muted-foreground">
-                Simple, fast, and secure.
-              </p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-24 px-6 text-center">
-        <motion.h2
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="text-4xl font-bold"
-        >
-          Start Securing Your App Today
-        </motion.h2>
-
-        <p className="mt-4 text-muted-foreground">
-          Trusted by developers worldwide.
+        {/* Subheading */}
+        <p className="mt-6 text-muted-foreground text-base md:text-lg">
+          A secure, modern authentication system with OAuth, JWT, role-based
+          access, and a futuristic UI.
         </p>
 
-        <div className="mt-8">
-          <Button size="lg" className="bg-gradient-to-br from bg-cyan-500 via-cyan-500 to-blue-300">Create Free Account</Button>
-        </div>
-      </section>
+        {/* Buttons */}
+        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Button
+            size="lg"
+            onClick={() => navigate("/signup")}
+            className="rounded-xl px-8"
+          >
+            Get Started
+          </Button>
 
-      {/* FOOTER */}
-      <footer className="py-10 text-center text-muted-foreground">
-        © {new Date().getFullYear()} Auth App. All rights reserved.
-      </footer>
+          <Button
+            size="lg"
+            variant="outline"
+            onClick={() => navigate("/login")}
+            className="rounded-xl px-8"
+          >
+            Login
+          </Button>
+        </div>
+
+        {/* Features */}
+        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-left">
+          <Feature title="OAuth Ready" desc="Google & GitHub login out of the box." />
+          <Feature title="JWT Secure" desc="Stateless, scalable authentication." />
+          <Feature title="RBAC" desc="Role-based access control." />
+          <Feature title="Modern UI" desc="Minimal, fast, responsive." />
+          <Feature title="Admin Panel" desc="User & role management." />
+          <Feature title="Developer First" desc="Built for devs, by devs." />
+        </div>
+
+        {/* Footer */}
+        <p className="mt-20 text-xs text-muted-foreground">
+          Built with ❤️ using React, Spring Boot & OAuth2
+        </p>
+      </motion.div>
     </div>
   );
-}
+};
+
+const Feature = ({ title, desc }: { title: string; desc: string }) => {
+  return (
+    <div className="rounded-xl border bg-background/40 p-5 backdrop-blur-md hover:shadow-lg transition">
+      <h3 className="font-semibold">{title}</h3>
+      <p className="mt-1 text-sm text-muted-foreground">{desc}</p>
+    </div>
+  );
+};
+
+export default Home;

@@ -1,3 +1,65 @@
-# QA version of configurations
 server:
   port: 8081
+
+spring:
+  application:
+    name: auth-app-backend
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/authdb_qa}
+    username: ${SPRING_DATASOURCE_USERNAME:authuser}
+    password: ${SPRING_DATASOURCE_PASSWORD:authpass}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope:
+              - email
+              - profile
+              - openid
+
+          github:
+            client-id: ${GITHUB_CLIENT_ID}
+            client-secret: ${GITHUB_CLIENT_SECRET}
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope:
+              - user:email
+              - read:user
+
+logging:
+  level:
+    org.springframework.security: INFO
+
+security:
+  jwt:
+    secret: ${JWT_SECRET}
+    issuer: ${JWT_ISSUER:qa.api.auth_app.com}
+    access-ttl-seconds: ${JWT_ACCESS_TTL_SECONDS:600}
+    refresh-ttl-seconds: ${JWT_REFRESH_TTL_SECONDS:86400}
+    refresh-token-cookie-name: ${JWT_REFRESH_COOKIE_NAME:refreshToken}
+    cookie-secure: false
+    cookie-http-only: true
+    cookie-same-site: None
+    cookie-domain:
+
+app:
+  cors:
+    front-end-url: ${FRONTEND_URL:http://localhost:5173}
+  auth:
+    frontend:
+      success-redirect: ${FRONTEND_URL:http://localhost:5173}/oauth/success
+      failure-redirect: ${FRONTEND_URL:http://localhost:5173}/oauth/failure

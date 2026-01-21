@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router'
-import Navbar from '@/components/Navbar'
+import Navbar from '@/components/layout/Navbar'
 import { Toaster } from 'react-hot-toast'
 
 const RootLayout = () => {
