@@ -1,14 +1,12 @@
 package com.brajesh.auth.auth_app_backend;
 
-import com.brajesh.auth.auth_app_backend.configs.AppConstants;
-import com.brajesh.auth.auth_app_backend.entities.Role;
-import com.brajesh.auth.auth_app_backend.repositories.RoleRepository;
+import com.brajesh.auth.auth_app_backend.auth.config.AppConstants;
+import com.brajesh.auth.auth_app_backend.auth.entities.Role;
+import com.brajesh.auth.auth_app_backend.auth.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.util.UUID;
 
 @SpringBootApplication
 public class AuthAppBackendApplication implements CommandLineRunner { // When the project will run CommandLineRunner will also get executed
