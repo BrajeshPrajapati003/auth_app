@@ -1,9 +1,12 @@
 package com.brajesh.auth.auth_app_backend.services.impl;
 
+import com.brajesh.auth.auth_app_backend.configs.AppConstants;
 import com.brajesh.auth.auth_app_backend.dtos.UserDto;
 import com.brajesh.auth.auth_app_backend.entities.Provider;
+import com.brajesh.auth.auth_app_backend.entities.Role;
 import com.brajesh.auth.auth_app_backend.entities.User;
 import com.brajesh.auth.auth_app_backend.exceptions.ResourceNotFoundException;
+import com.brajesh.auth.auth_app_backend.repositories.RoleRepository;
 import com.brajesh.auth.auth_app_backend.repositories.UserRepository;
 import com.brajesh.auth.auth_app_backend.services.UserService;
 import com.brajesh.auth.auth_app_backend.utils.UserHelper;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.UUID;
 
 @Service
@@ -21,6 +25,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final RoleRepository roleRepository;
+
 
     @Override
     @Transactional
@@ -43,6 +49,14 @@ public class UserServiceImpl implements UserService {
 
         // Role assign here to user --> for auth
         // TODO:
+        // Assign the role
+        Role role = roleRepository.findByName("ROLE_" + AppConstants.GUEST_ROLE).orElseThrow(() ->
+                new RuntimeException("GUEST role not found"));
+//        if(user.getRoles() == null){
+//            user.setRoles(new HashSet<>());
+//        }
+        user.getRoles().add(role);
+
         User savedUser = userRepository.save(user);
         return modelMapper.map(savedUser, UserDto.class);
     }

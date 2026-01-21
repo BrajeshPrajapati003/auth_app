@@ -249,14 +249,14 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED).body(authService.registerUser(userDto));
     }
 
-
-    @Value("${spring.security.oauth2.client.registration.google.client-id}")
-    private String googleClientId;
-
-    @PostConstruct
-    public void logGoogleClientId() {
-        System.out.println("Google Client ID = [" + googleClientId + "]");
-    }
+//
+//    @Value("${spring.security.oauth2.client.registration.google.client-id}")
+//    private String googleClientId;
+//
+//    @PostConstruct
+//    public void logGoogleClientId() {
+//        System.out.println("Google Client ID = [" + googleClientId + "]");
+//    }
 
 //    @Value("${spring.security.oauth2.client.registration.google.client-secret}")
 //    private String clientSecret;

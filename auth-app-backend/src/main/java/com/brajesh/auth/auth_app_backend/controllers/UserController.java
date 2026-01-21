@@ -1,10 +1,12 @@
 package com.brajesh.auth.auth_app_backend.controllers;
 
+import com.brajesh.auth.auth_app_backend.configs.AppConstants;
 import com.brajesh.auth.auth_app_backend.dtos.UserDto;
 import com.brajesh.auth.auth_app_backend.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -46,6 +48,7 @@ public class UserController {
 
     // Get user by id
     // api/v1/users/{userId}
+//    @PreAuthorize("hasRole('" + AppConstants.ADMIN_ROLE + "')") // do this or use pattern matching in SecurityConfig
     @GetMapping("/{userId}")
     public ResponseEntity<UserDto> getUserById(@PathVariable("userId") String userId){
         return ResponseEntity.ok(userService.getUserById(userId));
