@@ -12,7 +12,7 @@ import axios from "axios";
 import { AlertTriangle } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
 import useAuth from "@/auth/store";
-import OAuth2Buttons from "@/components/OAuth2Buttons";
+import OAuth2Buttons from "@/components/common/OAuth2Buttons";
 
 export default function Login() {
   const [loginData, setLoginData] = useState<LoginData>({

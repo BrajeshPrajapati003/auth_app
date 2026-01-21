@@ -29,7 +29,7 @@ const OAuthSuccess = () => {
 
         toast.success("Login Success...");
         console.log();
-        navigate("/user/profile");
+        navigate("/user");
 
         } catch (error) {
           toast.error("Error while login!");

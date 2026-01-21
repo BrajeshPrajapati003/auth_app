@@ -14,10 +14,11 @@ export const updateUserProfile = async (userId: string, data: {
 };
 
 
-// export const changePassword = async (
-//   userId: string,
-//   data: { currentPassword: string; newPassword: string }
-// ) => {
-//   const res = await apiClient.put(`/users/${userId}/password`, data);
-//   return res.data;
-// };
+export const changePassword = async (
+  userId: string,
+  data: { currentPassword: string; newPassword: string }
+) => {
+  const res = await apiClient.put(`/users/${userId}/password`, data);
+  return res.data;
+};
+

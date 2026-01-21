@@ -3,6 +3,7 @@ import type LoginData from "@/models/LoginData";
 import type LoginResponseData from "@/models/LoginResponseData";
 import type RegisterData from "@/models/RegisterData";
 import type User from "@/models/User";
+import axios from "axios";
 
 
 // Register function
@@ -39,4 +40,10 @@ export const refreshToken = async ()=> {
   return response.data;
 }
 
-// APIs
+export const deleteMyAccount = async ()=> {
+  return axios.delete("/api/v1/users/me");
+};
+
+
+// Other APIs
+

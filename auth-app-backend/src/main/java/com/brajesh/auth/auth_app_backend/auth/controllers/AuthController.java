@@ -162,11 +162,6 @@ public class AuthController {
         cookieService.addNoStoreHeaders(response);
         return ResponseEntity.ok(TokenResponse.of(newAccessToken, newRefreshToken, jwtService.getAccessTtlSeconds(), mapper.map(user, UserDto.class)));
 
-
-
-
-
-
     }
 
     @PostMapping("/logout")
@@ -206,7 +201,6 @@ public class AuthController {
             if (fromCookie.isPresent()) {
                 return fromCookie;
             }
-
 
         }
 

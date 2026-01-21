@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { NavLink, useNavigate, useLocation } from "react-router";
 import useAuth from "@/auth/store";
 
@@ -33,7 +33,7 @@ const Navbar = () => {
 
   const handleLogout = async ()=> {
     await logout();
-    navigate("/login", {
+    navigate("/", {
       replace: true,
       state: {from: location.pathname},
     });
@@ -54,17 +54,16 @@ const Navbar = () => {
         >
           <img src="/auth-app-logo.svg" className="h-8 w-8" alt="Auth App" />
 
-          <span className="text-base tracking-tight font-semibold">
+          <a href="/" className="text-base tracking-tight font-semibold">
             Auth App
-          </span>
+          </a>
         </motion.div>
 
         {/* Links */}
         {checkLogin() ? (
           <div className="flex gap-4 items-center">
-            <NavLink to={"/user/profile"}>{user?.name}</NavLink>
+            <NavLink to={"/user"}>{user?.name}</NavLink>
 
-          
             <Button
               size="sm"
               className="bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-cyan-500 hover:to-indigo-600 transition-all shadow-md hover:shadow-cyan-500/40"

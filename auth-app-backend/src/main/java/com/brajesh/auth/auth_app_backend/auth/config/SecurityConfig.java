@@ -1,6 +1,11 @@
 package com.brajesh.auth.auth_app_backend.auth.config;
 
+import com.brajesh.auth.auth_app_backend.auth.entities.User;
+import com.brajesh.auth.auth_app_backend.auth.payload.UserDto;
 import com.brajesh.auth.auth_app_backend.dtos.ApiError;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +22,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -31,15 +37,19 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
+@RequiredArgsConstructor
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationSuccessHandler successHandler;
+    private final AuthenticationFailureHandler failureHandler;
 
-    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, AuthenticationSuccessHandler successHandler){
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-        this.successHandler = successHandler;
-    }
+//    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter,
+//                          AuthenticationSuccessHandler successHandler, AuthenticationFailureHandler failureHandler){
+//        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+//        this.successHandler = successHandler;
+//        this.failureHandler = failureHandler;
+//    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
@@ -55,7 +65,7 @@ public class SecurityConfig {
                                 .anyRequest().authenticated())
                 .oauth2Login(oauth2 ->
                         oauth2.successHandler(successHandler)
-                                .failureHandler(null)
+                                .failureHandler(failureHandler)
                 )
                 .logout(AbstractHttpConfigurer::disable)
                 .exceptionHandling(ex ->
@@ -137,4 +147,15 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", config);
         return source;
     }
+
+//    @Bean
+//    public ModelMapper modelMapper() {
+//        ModelMapper modelMapper = new ModelMapper();
+//
+//        TypeMap<User, UserDto> typeMap = modelMapper.createTypeMap(User.class, UserDto.class);
+//        typeMap.addMappings(mapper -> mapper.map(User::getRoles, UserDto::setRoles));
+//
+//        return modelMapper;
+//    }
+
 }

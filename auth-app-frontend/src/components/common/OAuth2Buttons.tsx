@@ -1,5 +1,5 @@
-import { Button } from "./ui/button";
-import { GithubIcon, Mail } from "lucide-react";
+import { Button } from "../ui/button";
+import { Github, Mail } from "lucide-react";
 
 function OAuth2Buttons() {
 
@@ -31,7 +31,7 @@ function OAuth2Buttons() {
             `${baseUrl}/oauth2/authorization/github`;
         }}
       >
-        <GithubIcon className="w-5 h-5" />
+        <Github className="w-5 h-5" />
         Continue with GitHub
       </Button>
     </div>

@@ -39,7 +39,8 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     private String frontEndSuccessUrl;
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                                        Authentication authentication) throws IOException, ServletException {
         logger.info("Successful Authentication");
         logger.info(authentication.toString());
 

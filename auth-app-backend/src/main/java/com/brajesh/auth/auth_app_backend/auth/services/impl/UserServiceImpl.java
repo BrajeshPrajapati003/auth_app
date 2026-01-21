@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.UUID;
 
 @Service
@@ -49,11 +50,11 @@ public class UserServiceImpl implements UserService {
         // Role assign here to user --> for auth
         // TODO:
         // Assign the role
+        if(user.getRoles() == null){
+            user.setRoles(new HashSet<>());
+        }
         Role role = roleRepository.findByName("ROLE_" + AppConstants.GUEST_ROLE).orElseThrow(() ->
                 new RuntimeException("GUEST role not found"));
-//        if(user.getRoles() == null){
-//            user.setRoles(new HashSet<>());
-//        }
         user.getRoles().add(role);
 
         User savedUser = userRepository.save(user);
