@@ -42,6 +42,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/authdb
       SPRING_DATASOURCE_USERNAME: authuser
       SPRING_DATASOURCE_PASSWORD: authpass
+      JWT_SECRET: PROD_JWT_SECRET_9f3AqLx72H@KpZrT!eM8D1sWvC_EXTRA_RANDOM_1234567890_XYZ
 
     networks:
       - auth_app
