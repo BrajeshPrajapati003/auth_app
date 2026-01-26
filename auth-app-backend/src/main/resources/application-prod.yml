@@ -37,7 +37,7 @@ spring:
     properties:
       hibernate:
         format_sql: false
-    show-sql: false
+    show-sql: true
 
   security:
     oauth2:
@@ -68,18 +68,18 @@ logging:
 security:
   jwt:
     secret: ${JWT_SECRET} # MUST be set in env
-    issuer: ${JWT_ISSUER}
+    issuer: ${JWT_ISSUER:auth-app}
     access-ttl-seconds: ${JWT_ACCESS_TTL_SECONDS:600}
     refresh-ttl-seconds: ${JWT_REFRESH_TTL_SECONDS:86400}
     refresh-token-cookie-name: ${JWT_REFRESH_COOKIE_NAME:refreshToken}
     cookie-secure: true
     cookie-http-only: true
     cookie-same-site: None
-    cookie-domain: ${COOKIE_DOMAIN}
+    cookie-domain: ${COOKIE_DOMAIN:}
 
 app:
   cors:
-    front-end-url: ${FRONTEND_URL}
+    front-end-url: ${FRONTEND_URL:http://localhost:5173}
   auth:
     frontend:
       success-redirect: ${FRONTEND_URL}/oauth/success
