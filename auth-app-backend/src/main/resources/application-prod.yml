@@ -67,7 +67,7 @@ logging:
 
 security:
   jwt:
-    secret: ${JWT_SECRET} # MUST be set in env
+    secret: ${JWT_SECRET:PROD_JWT_SECRET_9f3AqLx72H@KpZrT!eM8D1sWvC_EXTRA_RANDOM_1234567890_XYZ} # MUST be set in env
     issuer: ${JWT_ISSUER:auth-app}
     access-ttl-seconds: ${JWT_ACCESS_TTL_SECONDS:600}
     refresh-ttl-seconds: ${JWT_REFRESH_TTL_SECONDS:86400}
@@ -80,7 +80,9 @@ security:
 app:
   cors:
     front-end-url: ${FRONTEND_URL:http://localhost:5173}
+
   auth:
     frontend:
-      success-redirect: ${FRONTEND_URL}/oauth/success
-      failure-redirect: ${FRONTEND_URL}/oauth/failure
+      success-redirect: ${FRONTEND_URL:http://localhost:5173}/oauth/success
+      failure-redirect: ${FRONTEND_URL:http://localhost:5173}/oauth/failure
+
