@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { NavLink, useNavigate, useLocation } from "react-router";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import useAuth from "@/auth/store";
 
 

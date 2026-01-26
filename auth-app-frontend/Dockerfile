@@ -1,3 +1,6 @@
+# Used only for Docker / Railway deployments
+# Not used by Netlify
+
 # Build stage
 FROM node:20-alpine AS build
 
