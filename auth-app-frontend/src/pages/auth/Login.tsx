@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { useState, type FormEvent } from "react";
 import type LoginData from "@/models/LoginData";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import axios from "axios";
 import { AlertTriangle } from "lucide-react";

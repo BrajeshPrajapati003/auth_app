@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import useAuth from "@/auth/store";
 import { setTheme } from "@/utils/theme";
 import { deleteMyAccount, logoutUser } from "@/services/AuthService";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { Badge } from "@/components/ui/badge";
 

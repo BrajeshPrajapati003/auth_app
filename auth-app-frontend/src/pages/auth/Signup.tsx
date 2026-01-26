@@ -8,7 +8,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import type RegisterData from "@/models/RegisterData";
 import { registerUser } from "@/services/AuthService";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import confetti from "canvas-confetti";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import { Spinner } from "@/components/ui/spinner";
