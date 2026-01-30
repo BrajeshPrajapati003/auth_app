@@ -51,64 +51,80 @@ public class SecurityConfig {
 //        this.failureHandler = failureHandler;
 //    }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        http
-                .csrf(AbstractHttpConfigurer::disable)
-                .cors(Customizer.withDefaults())
-                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+//        http
+//                .csrf(AbstractHttpConfigurer::disable)
+//                .cors(Customizer.withDefaults())
+//                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//
+//                .authorizeHttpRequests(auth ->
+//                        auth
+//                                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // OPTIONS -> preflight
+//                                .requestMatchers(AppConstants.AUTH_PUBLIC_URLS).permitAll()
+//                                .requestMatchers(AppConstants.AUTH_ADMIN_URLS).hasRole(AppConstants.ADMIN_ROLE)
+//                                .requestMatchers(AppConstants.AUTH_GUEST_URLS).hasRole(AppConstants.GUEST_ROLE)
+//                                .anyRequest().authenticated())
+//                .oauth2Login(oauth2 ->
+//                        oauth2.successHandler(successHandler)
+//                                .failureHandler(failureHandler)
+//                )
+//                .logout(AbstractHttpConfigurer::disable)
+//                .exceptionHandling(ex ->
+//                        ex.authenticationEntryPoint((request, response, e) -> {
+//                            // Error message
+//                            response.setStatus(401);
+//                            response.setContentType("application/json");
+//                            String message = e.getMessage();
+//
+//
+//                            String error = (String) request.getAttribute("error");
+//                            if(error != null) message = error;
+//
+////                    Map<String, Object> errorMap = Map.of("message", message, "statusCode", 401);
+//
+//                            var apiError = ApiError.of(
+//                                    HttpStatus.UNAUTHORIZED.value(),
+//                                    "Unauthorized Access", message,
+//                                    request.getRequestURI(), true);
+//                            var objectMapper = new ObjectMapper();
+//                            response.getWriter().write(objectMapper.writeValueAsString(apiError));
+//                        })
+//                        .accessDeniedHandler((request, response, e) -> {
+//                            response.setStatus(403);
+//                            response.setContentType("application/json");
+//                            String message = e.getMessage();
+//                            String error = (String) request.getAttribute("error");
+//                            if(error != null){
+//                                message = error;
+//                            }
+//
+//                            var apiError = ApiError.of(HttpStatus.FORBIDDEN.value(), "Forbidden Access", message,
+//                                    request.getRequestURI(), true);
+//                            var objectMapper = new ObjectMapper();
+//                            response.getWriter().write(objectMapper.writeValueAsString(apiError));
+//
+//                        })
+//                )
+//                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+//        return http.build();
+//    }
 
-                .authorizeHttpRequests(auth ->
-                        auth
-                                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // OPTIONS -> preflight
-                                .requestMatchers(AppConstants.AUTH_PUBLIC_URLS).permitAll()
-                                .requestMatchers(AppConstants.AUTH_ADMIN_URLS).hasRole(AppConstants.ADMIN_ROLE)
-                                .requestMatchers(AppConstants.AUTH_GUEST_URLS).hasRole(AppConstants.GUEST_ROLE)
-                                .anyRequest().authenticated())
-                .oauth2Login(oauth2 ->
-                        oauth2.successHandler(successHandler)
-                                .failureHandler(failureHandler)
-                )
-                .logout(AbstractHttpConfigurer::disable)
-                .exceptionHandling(ex ->
-                        ex.authenticationEntryPoint((request, response, e) -> {
-                            // Error message
-                            response.setStatus(401);
-                            response.setContentType("application/json");
-                            String message = e.getMessage();
 
 
-                            String error = (String) request.getAttribute("error");
-                            if(error != null) message = error;
+@Bean
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+            .csrf(AbstractHttpConfigurer::disable)
+            .cors(Customizer.withDefaults())
+            .authorizeHttpRequests(auth -> auth
+                    .anyRequest().permitAll()
+            );
 
-//                    Map<String, Object> errorMap = Map.of("message", message, "statusCode", 401);
+    return http.build();
+}
 
-                            var apiError = ApiError.of(
-                                    HttpStatus.UNAUTHORIZED.value(),
-                                    "Unauthorized Access", message,
-                                    request.getRequestURI(), true);
-                            var objectMapper = new ObjectMapper();
-                            response.getWriter().write(objectMapper.writeValueAsString(apiError));
-                        })
-                        .accessDeniedHandler((request, response, e) -> {
-                            response.setStatus(403);
-                            response.setContentType("application/json");
-                            String message = e.getMessage();
-                            String error = (String) request.getAttribute("error");
-                            if(error != null){
-                                message = error;
-                            }
 
-                            var apiError = ApiError.of(HttpStatus.FORBIDDEN.value(), "Forbidden Access", message,
-                                    request.getRequestURI(), true);
-                            var objectMapper = new ObjectMapper();
-                            response.getWriter().write(objectMapper.writeValueAsString(apiError));
-
-                        })
-                )
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-        return http.build();
-    }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
