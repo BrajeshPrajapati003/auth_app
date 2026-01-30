@@ -59,7 +59,9 @@ public class SecurityConfig {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers(AppConstants.AUTH_PUBLIC_URLS).permitAll()
+                        auth
+                                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // OPTIONS -> preflight
+                                .requestMatchers(AppConstants.AUTH_PUBLIC_URLS).permitAll()
                                 .requestMatchers(AppConstants.AUTH_ADMIN_URLS).hasRole(AppConstants.ADMIN_ROLE)
                                 .requestMatchers(AppConstants.AUTH_GUEST_URLS).hasRole(AppConstants.GUEST_ROLE)
                                 .anyRequest().authenticated())
