@@ -37,6 +37,7 @@ spring:
       ddl-auto: validate   # IMPORTANT: No schema mutation in prod
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
         format_sql: false
 #    show-sql: true
 
