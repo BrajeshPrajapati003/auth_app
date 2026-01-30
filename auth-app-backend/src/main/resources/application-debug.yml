@@ -1,0 +1,70 @@
+
+spring:
+  application:
+    name: auth-app-backend
+  hikari:
+    initialization-fail-timeout: -1
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate   # IMPORTANT: No schema mutation in prod
+    properties:
+      hibernate:
+        # Dialect - not necessary to mention now but mentioning it in prod makes it reliable
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: false
+  #    show-sql: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope:
+              - email
+              - profile
+              - openid
+
+          github:
+            client-id: ${GITHUB_CLIENT_ID}
+            client-secret: ${GITHUB_CLIENT_SECRET}
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope:
+              - user:email
+              - read:user
+
+logging:
+  level:
+    root: INFO
+    org.springframework.security: WARN
+
+security:
+  jwt:
+    secret: ${JWT_SECRET:PROD_JWT_SECRET_9f3AqLx72H@KpZrT!eM8D1sWvC_EXTRA_RANDOM_1234567890_XYZ} # MUST be set in env
+    issuer: ${JWT_ISSUER:auth-app}
+    access-ttl-seconds: ${JWT_ACCESS_TTL_SECONDS:600}
+    refresh-ttl-seconds: ${JWT_REFRESH_TTL_SECONDS:86400}
+    refresh-token-cookie-name: ${JWT_REFRESH_COOKIE_NAME:refreshToken}
+    cookie-secure: true
+    cookie-http-only: true
+    cookie-same-site: None
+    cookie-domain: ${COOKIE_DOMAIN:}
+
+app:
+  cors:
+    front-end-url: ${FRONTEND_URL:http://localhost:5173}
+
+  auth:
+    frontend:
+      success-redirect: ${FRONTEND_URL:http://localhost:5173}/oauth/success
+      failure-redirect: ${FRONTEND_URL:http://localhost:5173}/oauth/failure
+
