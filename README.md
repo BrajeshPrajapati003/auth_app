@@ -38,15 +38,6 @@ Built with a backend-first engineering approach, AuthApp focuses on security, mo
 - Password Reset Flow
 - Email Verification Support
 
-## Microservices Architecture
-- API Gateway
-- Auth Service
-- User Service
-- Session Management Service
-- Notification Service
-- Independent Service Communication
-- Centralized Authentication Flow
-
 ## Developer Experience
 - RESTful APIs
 - Layered Architecture
@@ -63,9 +54,7 @@ Built with a backend-first engineering approach, AuthApp focuses on security, mo
 
 ```text
 Client Applications
-        ↓
-    API Gateway
-        ↓
+        ↓   
  ┌───────────────┐
  │  Auth Service │
  └───────────────┘
@@ -84,6 +73,7 @@ Client Applications
         ↓
       Database
 
+```
 
 # 🛠️ Tech Stack
 
@@ -102,8 +92,7 @@ Client Applications
 
 ## DevOps & Infrastructure
 - Docker
-- API Gateway
-- Microservices Architecture
+- GitHub Actions
 
 ## Frontend (Minimal Integration)
 - React
@@ -124,28 +113,111 @@ Client Applications
 - Layered Backend Architecture
 - Exception Handling Strategy
 - Secure Configuration Management
-- Microservices-based Backend Design
 
 ---
-
 # 📂 Project Structure
 
 ```text
-auth-app/
+auth_app/
 │
-├── api-gateway/
-├── auth-service/
-├── user-service/
-├── session-service/
-├── notification-service/
+├── auth-app-backend/
+│   ├── src/main/java/
+│   │   ├── auth/
+│   │   │   ├── config/
+│   │   │   ├── controllers/
+│   │   │   ├── entities/
+│   │   │   ├── payload/
+│   │   │   ├── repositories/
+│   │   │   ├── services/
+│   │   │   └── utils/
+│   │   │
+│   │   ├── configs/
+│   │   ├── dtos/
+│   │   ├── exceptions/
+│   │   └── AuthAppBackendApplication.java
+│   │
+│   ├── resources/
+│   ├── Dockerfile
+│   ├── docker-compose.yml
+│   └── pom.xml
 │
-├── frontend/
+├── auth-app-frontend/
+│   ├── src/
+│   │   ├── auth/
+│   │   ├── components/
+│   │   ├── config/
+│   │   ├── lib/
+│   │   ├── models/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   └── utils/
+│   │
+│   ├── public/
+│   └── package.json
 │
-├── docker/
-├── docs/
 └── README.md
 ```
 
+---
+
+# 🛠️ Tech Stack
+
+## Backend
+- Java
+- Spring Boot
+- Spring Security
+- JWT Authentication
+- OAuth2
+- Hibernate / JPA
+- Maven
+
+## Frontend
+- React
+- TypeScript
+- Tailwind CSS
+
+## Database
+- MySQL
+
+## DevOps
+- Docker
+- Docker Compose
+
+---
+
+# 📌 Core Concepts Implemented
+
+- JWT Authentication
+- OAuth2 Login
+- Role-Based Authorization
+- Secure REST APIs
+- Stateless Authentication
+- Password Encryption
+- Refresh Token Flow
+- DTO Pattern
+- Exception Handling
+- Layered Architecture
+- Environment-based Configuration
+- Dockerized Deployment
+- Protected Routes
+- Authentication Filters
+- Form Validation
+- Secure Backend Development
+
+---
+
+# 📈 Why This Project Matters
+
+AuthApp was built to simulate a real-world secure authentication system for modern applications.
+
+The project demonstrates:
+- enterprise backend architecture
+- secure authentication workflows
+- production-oriented Spring Security implementation
+- scalable backend organization
+- frontend-backend integration
+- Dockerized application setup
+- modern authentication best practices
 ---
 
 # ⚙️ Environment Variables
@@ -233,8 +305,6 @@ Through this project, the following concepts were explored deeply:
 - Spring Security Internals
 - JWT Authentication Lifecycle
 - OAuth2 Authentication Flow
-- API Gateway Routing
-- Microservices Communication
 - Secure Backend Development
 - Dockerized Services
 - Authentication Best Practices
@@ -274,4 +344,4 @@ This project is for educational and portfolio purposes.
 
 Brajesh Prajapati
 
-Backend Developer | Java & Spring Boot Enthusiast | Microservices & Secure Systems
+Backend Developer | Java & Spring Boot Enthusiast | Secure Systems
